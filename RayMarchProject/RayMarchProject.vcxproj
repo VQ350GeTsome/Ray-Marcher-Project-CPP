@@ -125,13 +125,19 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="RayMarcher.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SDFManager.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="RayMarcher.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SDF.h" />
+    <ClInclude Include="SDFManager.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Vec3.h" />
     <ClInclude Include="Window.h" />

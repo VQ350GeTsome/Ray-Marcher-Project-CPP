@@ -36,6 +36,15 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Scene Stuff</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files\Scene Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="RayMarcher.cpp">
+      <Filter>Source Files\Scene Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="SDFManager.cpp">
+      <Filter>Source Files\Scene Stuff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -47,13 +56,22 @@
     <ClInclude Include="SDF.h">
       <Filter>Header Files\SDFs</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Header Files\SDFs</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Scene Stuff</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>Header Files\Scene Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="RayMarcher.h">
+      <Filter>Header Files\Scene Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\Scene Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Header Files\SDFs</Filter>
+    </ClInclude>
+    <ClInclude Include="SDFManager.h">
       <Filter>Header Files\Scene Stuff</Filter>
     </ClInclude>
   </ItemGroup>
