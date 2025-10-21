@@ -45,6 +45,9 @@
     <ClCompile Include="SDFManager.cpp">
       <Filter>Source Files\Scene Stuff</Filter>
     </ClCompile>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -73,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="SDFManager.h">
       <Filter>Header Files\Scene Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

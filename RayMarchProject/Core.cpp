@@ -5,24 +5,18 @@
 
 #include <iostream>
 #include <vector>
+#include <omp.h>
 
 static void mainLoop(Window* window, Scene* scene)
 {
 	while (window->ProcessMessages())
 	{
-		std::vector<std::vector<vec3>> buffer = scene->renderScene();	//Render the scene to buffer
-
-		for (int x = 0; x < window->m_width; x++)	for (int y = 0; y < window->m_height; y++)
-		{
-			vec3 color = buffer[y][x].clamp(0, 255);						//Get the color from the buffer
-			window->setRGB(x, y, (int)color.x, (int)color.y, (int)color.z); //Set the pixel to that color
-		}
-
-		window->present();	//Presents the buffered image to the window
+		window->processBuffer(scene->renderScene());	//Renders scene & then processes it into the window buffer then presents it
 		
-		Sleep(17);			//Sleep for 17ms to cap at 58.82fps
+		Sleep(34);			//Sleep for 17ms to cap at 58.82fps
 	}
 }
+
 //Initializes the scene with objects and settings
 static Scene* initializeScene(const int width, const int height)
 {
@@ -30,18 +24,18 @@ static Scene* initializeScene(const int width, const int height)
 	
 	scene->updateDimensions(width, height);
 
-	vec3	camPos    =		vec3(0.0f, 0.0f, 0.0f),
-			camTarget =		vec3(0.0f, 1.0f, 0.0f),
-			camUp     =		vec3(0.0f, 0.0f, 1.0f);
-	float fov = 90.0f;							//Camera FOV
-
+	//Camera settings
+	vec3	camPos    =		vec3(-1.0f,  0.0f,  0.0f),
+			camTarget =		vec3( 1.0f,  0.0f,  0.0f),
+			camUp     =		vec3( 0.0f,  1.0f,  0.0f);
+	float fov = 90.0f;							
 	scene->setCamera(camPos, camTarget, camUp, fov);
+	
+	//Set lighting settings
+	scene->setSceneLight(vec3(0.5f, -1.0f, -0.33f));
+	scene->setAmbientLight(0.05f);
 
-	vec3 lightDir = vec3(-0.33f, 0.5f, -1.0f);
-
-	scene->setLightDirection(lightDir);
-
-	SDF* sphere1 = new Sphere(vec3(0.0f, 3.0f, 0.0f), 1.0f);
+	SDF* sphere1 = new Sphere(vec3(3.0f, 0.0f, 0.0f), 1.0f);
 	sphere1->setColor(vec3(255.0f, 0.0f, 0.0f));
 
 	scene->addSDF(sphere1);
@@ -51,10 +45,15 @@ static Scene* initializeScene(const int width, const int height)
 
 int main() 
 {
-	int width = 500, height = 500;
-	Window* window = new Window(&width, &height);
+	omp_set_num_threads(8);	//Will make settings panel for this later ... 
 
+	int width = 500, height = 500;
+	Window* window = new Window(width, height);
+	Controls* controls = new Controls();
 	Scene* scene = initializeScene(width, height);
+
+	window->giveControlsAccess(controls);
+	controls->giveSceneAccess(scene);
 
 	mainLoop(window, scene);
 
