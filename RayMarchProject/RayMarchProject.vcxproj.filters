@@ -13,21 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\SDFs">
-      <UniqueIdentifier>{529850f5-ea17-4e72-9710-65a4328a4172}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Scene Stuff">
       <UniqueIdentifier>{311d8d0f-c3e5-4e81-9149-96ec470e578f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Scene Stuff">
       <UniqueIdentifier>{f7e04341-76f8-4666-baca-7248ecab800d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Window Stuff">
+      <UniqueIdentifier>{2d2d4f27-1303-40c4-aa93-65b2c4f33620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Window Stuff">
+      <UniqueIdentifier>{58447e78-32bb-46ce-80c3-6aa7d1ffbbb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{625ff996-7cf9-480b-900d-f3663a5ab8c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\SDFs">
+      <UniqueIdentifier>{529850f5-ea17-4e72-9710-65a4328a4172}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -45,16 +51,19 @@
     <ClCompile Include="SDFManager.cpp">
       <Filter>Source Files\Scene Stuff</Filter>
     </ClCompile>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files\Window Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuBar.cpp">
+      <Filter>Source Files\Window Stuff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vec3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SDF.h">
-      <Filter>Header Files\SDFs</Filter>
+      <Filter>Header Files\Utilities\SDFs</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Scene Stuff</Filter>
@@ -69,10 +78,22 @@
       <Filter>Header Files\Scene Stuff</Filter>
     </ClInclude>
     <ClInclude Include="Sphere.h">
-      <Filter>Header Files\SDFs</Filter>
+      <Filter>Header Files\Utilities\SDFs</Filter>
     </ClInclude>
     <ClInclude Include="SDFManager.h">
       <Filter>Header Files\Scene Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec3.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files\Window Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuBar.h">
+      <Filter>Header Files\Window Stuff</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

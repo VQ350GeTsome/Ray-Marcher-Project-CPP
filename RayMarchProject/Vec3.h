@@ -1,13 +1,23 @@
 #pragma once
 
 #include <cmath>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 struct vec3 
 {
 	float x, y, z;
 
 	vec3() : x(0), y(0), z(0) {}
-	vec3(float x, float y, float z) : x(x), y(y), z(z) {}
+	vec3(float xq, float yq, float zq) : x(xq), y(yq), z(zq) {}
+
+	std::string toString(int precision = 3) const {
+		std::ostringstream ss;
+		ss << std::fixed << std::setprecision(precision)
+			<< "{" << x << ", " << y << ", " << z << "}";
+		return ss.str();
+	}
 
 	//Define addition operator
 	vec3 operator+(const vec3& other) const
@@ -48,11 +58,15 @@ struct vec3
 	{
 		return sqrt(x * x + y * y + z * z);
 	}
-	//Define normalization of the vector
-	vec3 normalize() const
+	float lengthSqr() const 
 	{
+		return x * x + y * y + z * z;
+	}
+	//Define normalization of the vector
+	vec3 normalize() const {
 		float len = length();
-		return vec3(x / len, y / len, z / len);
+		if (len <= 1e-8f) return vec3(0.0f, 0.0f, 0.0f);
+		return (*this) / len;
 	}
 	//Clamp each component between min and max
 	vec3 clamp(float min, float max) const		
@@ -68,4 +82,10 @@ struct vec3
 	{
 		return vec3((int)x, (int)y, (int)z);
 	}
+
+	//------Static versions------\\
+
+	static vec3 normalize(const vec3& o) { return o.normalize(); }
+	static vec3 cross(const vec3& a, const vec3& b) { return a.cross(b); }
+	static float dot(const vec3& a, const vec3& b) { return a.dot(b); }
 };

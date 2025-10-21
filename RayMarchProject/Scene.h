@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <cmath>
+#include <tuple>
 
 //Scene class managing all components, abstracting away some complexity ...
 class Scene {
@@ -31,15 +32,17 @@ public:
 	}
 	
 	//Initialize or reinitialize the camera parameters
-	void setCamera(const vec3& pos, const vec3& target, const vec3& upVector, float fieldOfView) { camera->initalizeCamera(pos, target, upVector, fieldOfView); }
+	void setCamera(const vec3 &pos, const vec3 &target, const vec3 &upVector, float fieldOfView) { camera->initalizeCamera(pos, target, upVector, fieldOfView); }
+	void moveCamera(const vec3 &m) { camera->move(m); }
+	void rotateCamera(const float& y, const float& p) { camera->rotate(y, p); }
+	std::tuple<vec3, vec3, vec3> getCameraOrien() { return std::make_tuple(camera->getForward(), camera->getRight(), camera->getUp()); }
 
 	//Set light direction
-	void setLightDirection(const vec3& dir) { light->setLightDir(dir); }
+	void setSceneLight(const vec3 &dir) { light->setLightDir(dir); }
+	void setAmbientLight(const float &l) { light->setAmbientLight(l); }
 
-	//Add an SDF to the scene
+	//SDF adder & remover
 	void addSDF(SDF* sdf) { sdfMgr->addSDF(sdf); }
-
-	//Remove a specific SDF from the scene
 	void removeSDF(SDF* sdf) { sdfMgr->removeSDF(sdf); }
 
 	//Renders the scene and returns a 2D array of pixel colors
