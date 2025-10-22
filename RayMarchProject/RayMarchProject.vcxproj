@@ -140,6 +140,7 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="MenuBar.h" />
     <ClInclude Include="RayMarcher.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SDF.h" />
     <ClInclude Include="SDFManager.h" />

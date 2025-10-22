@@ -46,20 +46,18 @@ static Scene* initializeScene(const int width, const int height)
 
 int main() 
 {
-	omp_set_num_threads(8);	//Will make settings panel for this later ... 
+	int width = 500, height = 500;
+	MainWindow* window = new MainWindow(width, height);
+	
+	float scale = 5.0f;
+	
+	Scene* scene = initializeScene(width / scale, height / scale);
 
-	int w_width = 500, w_height = 500;
+	Controls* controller	= new Controls(scene);
+	MenuBar* menuBar		= new MenuBar(scene);
 
-	MainWindow* window = new MainWindow(w_width, w_height);
-
-	float scale = 2.0f;		//Ill have to also make a setting for this somewhere ... at some point ... at some time
-
-	Scene* scene		= initializeScene((int)(w_width / scale), (int)(w_height / scale));
-	Controls* controls	= new Controls(scene);		//Instatiates the controls and gives it access to the scene
-	MenuBar*  menuBar	= new MenuBar (scene);		//Does the same for the menu bar 
-
-	window->giveControlsAccess(controls);			//Gives the window access the controls
-	window->giveMenuBarAccess(menuBar);				//Gives the window access to the menuBar
+	window->giveControlsAccess(controller);
+	window->giveMenuBarAccess(menuBar);
 
 	mainLoop(window, scene);
 

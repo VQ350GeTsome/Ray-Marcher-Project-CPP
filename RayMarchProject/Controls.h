@@ -21,6 +21,8 @@ public:
 	//Camera moving set grainulatity
 	bool setMoveGrain(float n) { moveGrain = (n > 0) ? n : moveGrain; }
 	bool setPanGrain(float  n) {  panGrain = (n > 0) ? n :  panGrain; }
+	
+	void giveSceneAccess(Scene* scene) { this->scene = scene; }
 
 private:
 

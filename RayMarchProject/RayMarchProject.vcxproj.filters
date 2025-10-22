@@ -51,15 +51,6 @@
     <ClCompile Include="SDFManager.cpp">
       <Filter>Source Files\Scene Stuff</Filter>
     </ClCompile>
-    <ClCompile Include="Controls.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>Source Files\Window Stuff</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuBar.cpp">
-      <Filter>Source Files\Window Stuff</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDF.h">
@@ -82,18 +73,6 @@
     </ClInclude>
     <ClInclude Include="SDFManager.h">
       <Filter>Header Files\Scene Stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="Controls.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vec3.h">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="MainWindow.h">
-      <Filter>Header Files\Window Stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuBar.h">
-      <Filter>Header Files\Window Stuff</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
