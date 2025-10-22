@@ -132,7 +132,7 @@
     <ClCompile Include="RayMarcher.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SDFManager.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -145,7 +145,7 @@
     <ClInclude Include="SDFManager.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Vec3.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="MainWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

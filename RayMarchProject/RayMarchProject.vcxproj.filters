@@ -54,7 +54,7 @@
     <ClCompile Include="Controls.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
+    <ClCompile Include="MainWindow.cpp">
       <Filter>Source Files\Window Stuff</Filter>
     </ClCompile>
     <ClCompile Include="MenuBar.cpp">
@@ -89,7 +89,7 @@
     <ClInclude Include="Vec3.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h">
+    <ClInclude Include="MainWindow.h">
       <Filter>Header Files\Window Stuff</Filter>
     </ClInclude>
     <ClInclude Include="MenuBar.h">

@@ -1,16 +1,11 @@
-#include "window.h"
+#include "windows.h"
 
-#include "Window.h"
+#include "MainWindow.h"
 #include "Vec3.h"
 
 #include <vector>
 #include <cstdint>
-#include <iostream>
 #include <windowsx.h>
-
-#define ID_FILE_OPEN		101	//Menu bar commands
-#define ID_FILE_EXIT		102
-#define ID_HELP_ABOUT		103
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -22,7 +17,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	case WM_KEYDOWN:	//Parse key presses
 		{
-			Window* pWindow = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+			MainWindow* pWindow = reinterpret_cast<MainWindow*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 
 			if (pWindow && pWindow->controls) {
 				pWindow->controls->parseKeyInput(wParam);
@@ -31,7 +26,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 	case WM_COMMAND:	//Parse menu bar commands
 		{
-			Window* pWindow = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+			MainWindow* pWindow = reinterpret_cast<MainWindow*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 
 			if (pWindow && pWindow->menuBar) {
 				pWindow->menuBar->parseMenuInput(wParam);
@@ -44,7 +39,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 
 //Constructor & deconstructor
-Window::Window(const int& w, const int& h)
+MainWindow::MainWindow(const int& w, const int& h)
 	: m_hInstance(GetModuleHandle(nullptr)), m_width(w), m_height(h)
 {
 	const wchar_t* CLASS_NAME = L"Window Class";
@@ -62,13 +57,13 @@ Window::Window(const int& w, const int& h)
 
 	RECT rect = { 100, 100, w + 100, h + 100 };        //Create a RECT for the window size
 
-	AdjustWindowRect(&rect, style, false); //Pass the RECT into AdjustWindowRect
+	AdjustWindowRect(&rect, style, false);				//Pass the RECT into AdjustWindowRect
 
 	m_hWnd = CreateWindowEx(
 		0,
 		CLASS_NAME,
-		L"Title",                       // Window text
-		style,                          // Window style
+		L"Render: ",                    
+		style,                          
 		rect.left,
 		rect.top,
 		rect.right - rect.left,
@@ -98,7 +93,7 @@ Window::Window(const int& w, const int& h)
 
 	ShowWindow(m_hWnd, SW_SHOWDEFAULT);
 }
-Window::~Window()
+MainWindow::~MainWindow()
 {
 	if (m_hBitmap) {
 		DeleteObject(m_hBitmap);
@@ -110,25 +105,50 @@ Window::~Window()
 }
 
 //Menu stuff
-void Window::makeMenu() 
+void MainWindow::makeMenu()
 {
-	HMENU hMenu = CreateMenu();
+	HMENU menu = CreateMenu();		//Main menu bar
 
-	HMENU hFileMenu = CreatePopupMenu();
-	AppendMenu(hFileMenu, MF_STRING, ID_FILE_OPEN, L"Open");	//Submenus of files
-	AppendMenu(hFileMenu, MF_STRING, ID_FILE_EXIT, L"Exit");
+	HMENU	fileMenu		= CreatePopupMenu(),			//File   managment menu
+			sceneMenu		= CreatePopupMenu(),			//Scene  managment menu
+			cameraMenu		= CreatePopupMenu(),			//Camera managment menu
+			renderMenu		= CreatePopupMenu();			//Render managment menu
 
-	HMENU hHelpMenu = CreatePopupMenu();
-	AppendMenu(hHelpMenu, MF_STRING, ID_HELP_ABOUT, L"About");	//Submenus of about
+	AppendMenu(fileMenu, MF_STRING, menuBar->ID_FILE_OPEN,		L"Open Scene");		//Submenu of files
+	AppendMenu(fileMenu, MF_STRING, menuBar->ID_FILE_SAVE,		L"Save Scene");
+	AppendMenu(fileMenu, MF_STRING, menuBar->ID_FILE_EXPORT,	L"Save As Scene");
 
-	AppendMenu(hMenu, MF_POPUP, (UINT_PTR)hFileMenu, L"File");
-	AppendMenu(hMenu, MF_POPUP, (UINT_PTR)hHelpMenu, L"Help");	//Append to hMenu
+	HMENU	enviromentMenu	= CreatePopupMenu(),	//Subsubmenus for sceneMenu
+			behaviorMenu	= CreatePopupMenu();
 
-	SetMenu(m_hWnd, hMenu);		//Appended hMenu to the window
+	AppendMenu(sceneMenu, MF_STRING, menuBar->ID_SCENE_ADDOBJ,			L"Add Object");		//Submenu of scene
+	AppendMenu(sceneMenu, MF_STRING, menuBar->ID_SCENE_EDITFLOOR,		L"Edit Floor");
+	AppendMenu(sceneMenu, MF_POPUP, (UINT_PTR)enviromentMenu,			L"Edit Enviroment");
+	AppendMenu(sceneMenu, MF_POPUP, (UINT_PTR)behaviorMenu,				L"Change Object Behavior");
+
+	AppendMenu(enviromentMenu, MF_STRING, menuBar->ID_SCENE_EDIT_LIGHTING,	L"Lighting");		//Subsubmenu of edit enviroment
+	AppendMenu(enviromentMenu, MF_STRING, menuBar->ID_SCENE_EDIT_FOG,		L"Fog");
+
+	AppendMenu(behaviorMenu, MF_STRING, menuBar->ID_SCENE_BEHA_BLEND,		L"Blending");		//Subsubmenu of object behavior
+	
+	AppendMenu(cameraMenu, MF_STRING, menuBar->ID_CAMERA_CHANGEPOS,	L"Change Position");	//Submenu of camera
+	AppendMenu(cameraMenu, MF_STRING, menuBar->ID_CAMERA_CHANGEFOV,	L"Change FOV");
+	AppendMenu(cameraMenu, MF_STRING, menuBar->ID_CAMERA_GRAIN,		L"Change Grainularity");
+
+	AppendMenu(renderMenu, MF_STRING, menuBar->ID_RENDER_RESOLUTION,	L"Resolution");
+	AppendMenu(renderMenu, MF_STRING, menuBar->ID_RENDER_MAXDIST,		L"Max Distance");
+	AppendMenu(renderMenu, MF_STRING, menuBar->ID_RENDER_SHADOWDIST,	L"Shadow Distance");
+
+	AppendMenu(menu, MF_POPUP, (UINT_PTR)fileMenu,		L"File");		//Append menus of submenus to the bar
+	AppendMenu(menu, MF_POPUP, (UINT_PTR)sceneMenu,		L"Scene");
+	AppendMenu(menu, MF_POPUP, (UINT_PTR)cameraMenu,	L"Camera");
+	AppendMenu(menu, MF_POPUP, (UINT_PTR)renderMenu,	L"Render");
+
+	SetMenu(m_hWnd, menu);		//Append the bar of menus to the window
 }
 
 //Process messages
-bool Window::ProcessMessages()
+bool MainWindow::ProcessMessages()
 {
 	MSG msg = {};
 
@@ -149,7 +169,7 @@ bool Window::ProcessMessages()
 }
 
 //Imaging stuff
-bool Window::setRGB(int x, int y, int r, int g, int b)
+bool MainWindow::setRGB(int x, int y, int r, int g, int b)
 {
 	if (!m_pPixels) return false;
 	if (x < 0 || x >= m_width || y < 0 || y >= m_height) return false;
@@ -158,7 +178,7 @@ bool Window::setRGB(int x, int y, int r, int g, int b)
 	pixels[y * m_width + x] = color;
 	return true;
 }
-void Window::present()
+void MainWindow::present()
 {
 	HDC hdc = GetDC(m_hWnd);
 	HDC memDC = CreateCompatibleDC(hdc);
@@ -168,7 +188,7 @@ void Window::present()
 	DeleteDC(memDC);
 	ReleaseDC(m_hWnd, hdc);
 }
-void Window::processBuffer(const std::vector<std::vector<vec3>>& buffer) {
+void MainWindow::processBuffer(const std::vector<std::vector<vec3>>& buffer) {
 	if (!m_pPixels) return;
 	int srcW = (int)buffer[0].size();
 	int srcH = (int)buffer.size();

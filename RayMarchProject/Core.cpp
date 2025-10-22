@@ -1,4 +1,4 @@
-#include "Window.h"
+#include "MainWindow.h"
 #include "Scene.h"
 
 #include "Vec3.h"
@@ -8,7 +8,7 @@
 #include <vector>
 #include <omp.h>
 
-static void mainLoop(Window* window, Scene* scene)
+static void mainLoop(MainWindow* window, Scene* scene)
 {
 	while (window->ProcessMessages())
 	{
@@ -50,13 +50,13 @@ int main()
 
 	int w_width = 500, w_height = 500;
 
-	Window* window = new Window(w_width, w_height);
+	MainWindow* window = new MainWindow(w_width, w_height);
 
 	float scale = 2.0f;		//Ill have to also make a setting for this somewhere ... at some point ... at some time
 
 	Scene* scene		= initializeScene((int)(w_width / scale), (int)(w_height / scale));
 	Controls* controls	= new Controls(scene);		//Instatiates the controls and gives it access to the scene
-	MenuBar*  menuBar	= new MenuBar (scene);		//Does the same for the menu bar
+	MenuBar*  menuBar	= new MenuBar (scene);		//Does the same for the menu bar 
 
 	window->giveControlsAccess(controls);			//Gives the window access the controls
 	window->giveMenuBarAccess(menuBar);				//Gives the window access to the menuBar

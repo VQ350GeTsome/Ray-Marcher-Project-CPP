@@ -10,7 +10,7 @@
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-class Window
+class MainWindow
 {
 public:
 
@@ -19,19 +19,19 @@ public:
 	Controls* controls;
 	MenuBar* menuBar;
 
-	Window(const int& w, const int& h);				//Default constructor
-	Window(const Window&) = delete;					//Delete copy constructor
-	Window& operator =(const Window&) = delete;		//Delete equal operator
-	~Window();										//Destructor
+	MainWindow(const int& w, const int& h);					//Default constructor
+	MainWindow(const MainWindow&) = delete;					//Delete copy constructor
+	MainWindow& operator =(const MainWindow&) = delete;		//Delete equal operator
+	~MainWindow();											//Destructor
 		
-	bool ProcessMessages();							//Process all messages in the queue, return false if quit message
+	bool ProcessMessages();									//Process all messages in the queue, return false if quit message
 
 	bool setRGB(int x, int y, int r, int g, int b);						//Sets a pixel (x, y) to a certain RGB value
 	void present();														//Present the buffer (repaint)
 	void processBuffer(const std::vector<std::vector<vec3>> &buffer);	//Pass in a buffer and present it
 
-	void giveControlsAccess(Controls* controls)		{ this->controls = controls;  }		//Once we have access to controls and access to the menuBar,
-	void giveMenuBarAccess (MenuBar* menuBar)		{ this->menuBar  =  menuBar;  }		//both of which have access to the scene, we can control the scene
+	void giveControlsAccess(Controls* c)		{ this->controls = c;  }		//Once we have access to controls and access to the menuBar,
+	void giveMenuBarAccess (MenuBar*  m)		{ this->menuBar  = m;  }		//both of which have access to the scene, we can control the scene
 
 private:
 

@@ -40,8 +40,7 @@ struct vec3
 		return vec3(x / scalar, y / scalar, z / scalar);
 	}
 	//Define dot product
-	float dot(const vec3& other) const			
-	{
+	float dot(const vec3& other) const	{
 		return x * other.x + y * other.y + z * other.z;
 	}
 	//Define cross product
